@@ -1,0 +1,1 @@
+x = list(map(int, input().split())) # converts a b c ... into array [a, b, c...]
