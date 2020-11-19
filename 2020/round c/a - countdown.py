@@ -3,17 +3,16 @@ for i in range(1, caseCount + 1):
     intCount, goal = [int(s) for s in input().split(" ")]
     total = 0
     numbers = list(map(int, input().split()))
-    if len(numbers) == intCount:
-        for k in numbers:
-            if numbers[k-1] == goal:
-                loopCount = 1
-                mode = True
-                while goal - loopCount > 0:
-                    if numbers[(k-1)+loopCount] - numbers[k+loopCount] == 1:
-                        loopCount += 1
-                    else:
-                        mode = False
-                        break
-                if mode:
-                    total += 1
+    while goal in numbers:
+        tg = numbers.index(goal)
+        for j in range(0, goal-1):
+            if numbers[tg+j+1] == goal-(j+1):
+                pass
+            else:
+                break
+            total += 1
+            break
+        numbers.pop(tg)
     print("Case #{}: {}".format(i, total))
+
+    #seems to work but throws runtime error on kick start
