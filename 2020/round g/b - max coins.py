@@ -1,15 +1,15 @@
 
 c = int(input())
 
-def opt(m, x, y):
-    return(max(opt(m, x+1, y+1), opt(m, x-1, y-1)))
-    # idk
+def opt(t):
+    for j in range(len(t)+1):
+        for k in range()
 
 for i in range(1, c+1):
     s = int(input())
     grid = [[0 for j in range(s)] for k in range(s)]
     for j in range(s):
         grid[j] = list(map(int, input().split()))
-    print(opt(grid, 0, 0))
+    maxi = opt(grid)
 
     
