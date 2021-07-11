@@ -1,3 +1,4 @@
-f = open("demofile2.txt", "a")
-f.write("1 10000\n"*500)
+f = open("demofile3.txt", "a")
+for int in range(500):
+    f.write(f"{int} {int+9499}\n")
 f.close()
