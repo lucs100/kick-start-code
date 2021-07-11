@@ -43,13 +43,10 @@ for case in range(1, caseCount + 1):
     intervals = []
     for interval in range(0, intervalCount):
         intervals.append([int(s) for s in input().split(" ")])
-    print(intervals)
     for c in range(maxCuts):
         if cutsPossible(intervals):
             point = findBestX(intervals)
-            print(point)
             intervals = performCut(intervals, point)
-            print(intervals)
         else:
             break
     result = len(intervals)
