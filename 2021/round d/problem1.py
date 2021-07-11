@@ -1,5 +1,6 @@
 # This code was written in official competition by Lucas Di Pietro.
 # Attempt 1: 00:35:09 // 0/14 Points (6, 8)
+# Attempt 2: 01:11:38 // 0/14 Points (6, 8)
 def isArtithmetic(a, b, c):
     return (a - b) == (b - c)
 
@@ -12,7 +13,6 @@ def countGivenSeq(g):
     (g[2][0], g[2][1], g[2][2])]
     for line in lines:
         if isArtithmetic(*line):
-            print(line)
             count += 1
     return count
 
