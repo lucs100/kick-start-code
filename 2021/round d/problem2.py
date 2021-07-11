@@ -5,12 +5,10 @@
 # Attempt 4: 02:02:02 // 0/21 Points (9, 12) [RE]
 # Attempt 5: 02:17:04 // 0/21 Points (9, 12) [TLE]
 # Attempt 6 had no changes
-# Attempt 7: 02:17:04 // X/21 Points (9, 12) [TLE]
-
-def willBeCut(interval, b):
-    if interval[0] < b < interval[1]:
-        return True
-    return False
+# Attempt 7: 03:26:03 // 0/21 Points (9, 12) [TLE]
+# Attempt 8: 03:37:34 // 0/21 Points (9, 12) [TLE]
+# Attempt 9 failed samples
+# Attempt 10: 03:50:22 // 0/21 Points (9, 12) [TLE]
 
 def cutsPossible(intervalList):
     for interval in intervalList:
@@ -25,54 +23,36 @@ def prune(intervals):
             intervals.remove(interval)
     return intervals, count
 
-def getMidpt(interval):
-    return (interval[0]+interval[1])/2
-
 def getCount(intervals, midpt):
     count = 0
     for interval in intervals:
-        if willBeCut(interval, midpt):
+        if interval[0] < midpt < interval[1]:
             count += multis[intervals.index(interval)-1]
     return count
 
 def findBestX(intervalList):
-    lowest = 9999999999999999999
-    highest = -1
     midpts = dict()
 
     for interval in intervalList:
-        lowest = min(interval[0], lowest)
-        highest = max(interval[1], highest)
-        midpt = getMidpt(interval)
+        midpt = (interval[0]+interval[1])/2
         if isinstance(midpt, int):
-            count = getCount(intervalList, midpt)
-            midpts[int(midpt)] = count
+            midpts[int(midpt)] = getCount(intervalList, midpt)
         if isinstance(midpt, float):
             if midpt.is_integer(): #   X.0
-                count = getCount(intervalList, midpt)
-                midpts[int(midpt)] = count
+                midpts[int(midpt)] = getCount(intervalList, midpt)
             else:                  #   X.5
-                mp1 = int(midpt)
-                count = getCount(intervalList, mp1)
-                midpts[mp1] = count
-                mp2 = int(midpt) + 1
-                count = getCount(intervalList, mp2)
-                midpts[mp2] = count
+                midpts[int(midpt)] = getCount(intervalList, int(midpt))
+                midpts[int(midpt) + 1] = getCount(intervalList, int(midpt) + 1)
 
-    best = (max(midpts.values()))
-    return (list(midpts.keys())[list(midpts.values()).index(best)])
+    return (list(midpts.keys())[list(midpts.values()).index((max(midpts.values())))])
 
 def performCut(intervalList, b):
     for interval in intervalList:
-        if willBeCut(interval, b):
-            intervalList = list(intervalList)
-            intervalIndex = intervalList.index(interval)
-            multi = multis[intervalIndex-1]
-            interA = [interval[0], b]
-            interB = [b, interval[1]]
-            intervalList[intervalIndex] = interA
-            intervalList.insert(intervalIndex+1, interB)
-            multis.insert(intervalIndex+1, multi)
+        if interval[0] < b < interval[1]:
+            idx = intervalList.index(interval)
+            intervalList[idx] = [interval[0], b]
+            intervalList.insert(idx+1, [b, interval[1]])
+            multis.insert(idx+1, multis[idx])
     return intervalList
 
 caseCount = int(input())
@@ -96,5 +76,4 @@ for case in range(1, caseCount + 1):
             result += num
         else:
             break
-    result += len(intervals)
-    print("Case #{}: {}".format(case, result))
+    print("Case #{}: {}".format(case, result+ len(intervals)))
