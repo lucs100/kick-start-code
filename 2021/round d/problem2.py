@@ -1,7 +1,8 @@
 # This code was written in official competition by Lucas Di Pietro.
 # Attempt 1: 01:09:23 // 0/21 Points (9, 12) [WA]
 # Attempt 2: 01:12:41 // 0/21 Points (9, 12) [TLE]
-# Attempt 3: 01:57:02 // X/21 Points (9, 12) [TLE]
+# Attempt 3: 01:57:02 // 0/21 Points (9, 12) [RE]
+# Attempt 4: 02:02:02 // X/21 Points (9, 12) [RE]
 def willBeCut(interval, b):
     if interval[0] < b < interval[1]:
         return True
