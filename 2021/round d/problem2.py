@@ -1,7 +1,9 @@
 # This code was written in official competition by Lucas Di Pietro.
-# Attempt 1: 01:09:23 // X/21 Points (9, 12)
+# Attempt 1: 01:09:23 // 0/21 Points (9, 12) [WA]
+# Attempt 2: 01:12:41 // 0/21 Points (9, 12) [TLE]
+# Attempt 3: 01:57:02 // X/21 Points (9, 12) [TLE]
 def willBeCut(interval, b):
-    if interval[0] < b and b < interval[1]:
+    if interval[0] < b < interval[1]:
         return True
     return False
 
@@ -10,23 +12,34 @@ def cutsPossible(intervalList):
         if (interval[1] - interval[0]) > 1:
             return True
 
+def getMidpt(interval):
+    return (interval[0]+interval[1])/2
+
+def getCount(intervals, midpt):
+    count = 0
+    for interval in intervals:
+        if willBeCut(interval, midpt):
+            count += 1
+    return count
+
 def findBestX(intervalList):
     lowest = 9999999999999999999
     highest = -1
+    midpts = dict()
+
     for interval in intervalList:
         lowest = min(interval[0], lowest)
         highest = max(interval[1], highest)
-    maxCuts = 0
-    bestNum = None
-    for testNum in range(lowest, highest):
-        cuts = 0
-        for interval2 in intervalList:
-            if willBeCut(interval2, testNum):
-                cuts += 1
-        if cuts > maxCuts:
-            maxCuts = cuts
-            bestNum = testNum
-    return bestNum
+        midpt = getMidpt(interval)
+        if isinstance(midpt, int):
+            count = getCount(intervalList, midpt)
+            midpts[int(midpt)] = count
+        if isinstance(midpt, float):
+            if midpt.is_integer():
+                count = getCount(intervalList, midpt)
+                midpts[int(midpt)] = count
+    best = (max(midpts.values()))
+    return (list(midpts.keys())[list(midpts.values()).index(best)])
 
 def performCut(intervalList, b):
     for interval in intervalList:
