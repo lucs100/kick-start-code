@@ -2,7 +2,8 @@
 # Attempt 1: 01:09:23 // 0/21 Points (9, 12) [WA]
 # Attempt 2: 01:12:41 // 0/21 Points (9, 12) [TLE]
 # Attempt 3: 01:57:02 // 0/21 Points (9, 12) [RE]
-# Attempt 4: 02:02:02 // X/21 Points (9, 12) [RE]
+# Attempt 4: 02:02:02 // 0/21 Points (9, 12) [RE]
+# Attempt 5: 02:17:04 // X/21 Points (9, 12)
 def willBeCut(interval, b):
     if interval[0] < b < interval[1]:
         return True
@@ -36,9 +37,17 @@ def findBestX(intervalList):
             count = getCount(intervalList, midpt)
             midpts[int(midpt)] = count
         if isinstance(midpt, float):
-            if midpt.is_integer():
+            if midpt.is_integer(): #   X.0
                 count = getCount(intervalList, midpt)
                 midpts[int(midpt)] = count
+            else:                  #   X.5
+                mp1 = int(midpt)
+                count = getCount(intervalList, mp1)
+                midpts[mp1] = count
+                mp2 = int(midpt) + 1
+                count = getCount(intervalList, mp2)
+                midpts[mp2] = count
+
     best = (max(midpts.values()))
     return (list(midpts.keys())[list(midpts.values()).index(best)])
 
