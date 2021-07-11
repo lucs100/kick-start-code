@@ -1,6 +1,6 @@
 # This code was written in official competition by Lucas Di Pietro.
-# Attempt 1: 00:35:09 // 0/14 Points (6, 8)
-# Attempt 2: 01:11:38 // 0/14 Points (6, 8)
+# Attempt 1: 00:35:09 // 0/14 Points (6, 8) [WA]
+# Attempt 2: 01:11:38 // 14/14 Points (6, 8)
 def isArtithmetic(a, b, c):
     return (a - b) == (b - c)
 
