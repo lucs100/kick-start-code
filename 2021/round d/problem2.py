@@ -3,7 +3,10 @@
 # Attempt 2: 01:12:41 // 0/21 Points (9, 12) [TLE]
 # Attempt 3: 01:57:02 // 0/21 Points (9, 12) [RE]
 # Attempt 4: 02:02:02 // 0/21 Points (9, 12) [RE]
-# Attempt 5: 02:17:04 // X/21 Points (9, 12)
+# Attempt 5: 02:17:04 // 0/21 Points (9, 12) [TLE]
+# Attempt 6 had no changes
+# Attempt 7: 02:17:04 // X/21 Points (9, 12) [TLE]
+
 def willBeCut(interval, b):
     if interval[0] < b < interval[1]:
         return True
@@ -14,6 +17,14 @@ def cutsPossible(intervalList):
         if (interval[1] - interval[0]) > 1:
             return True
 
+def prune(intervals):
+    count = 0
+    for interval in intervals:
+        if (interval[1] - interval[0]) == 1:
+            count += multis[intervals.index(interval)-1]
+            intervals.remove(interval)
+    return intervals, count
+
 def getMidpt(interval):
     return (interval[0]+interval[1])/2
 
@@ -21,7 +32,7 @@ def getCount(intervals, midpt):
     count = 0
     for interval in intervals:
         if willBeCut(interval, midpt):
-            count += 1
+            count += multis[intervals.index(interval)-1]
     return count
 
 def findBestX(intervalList):
@@ -55,22 +66,35 @@ def performCut(intervalList, b):
     for interval in intervalList:
         if willBeCut(interval, b):
             intervalList = list(intervalList)
-            intervalList.append([interval[0], b])
-            intervalList.append([b, interval[1]])
-            intervalList.remove(interval)
+            intervalIndex = intervalList.index(interval)
+            multi = multis[intervalIndex-1]
+            interA = [interval[0], b]
+            interB = [b, interval[1]]
+            intervalList[intervalIndex] = interA
+            intervalList.insert(intervalIndex+1, interB)
+            multis.insert(intervalIndex+1, multi)
     return intervalList
 
 caseCount = int(input())
 for case in range(1, caseCount + 1):
     intervalCount, maxCuts = [int(s) for s in input().split(" ")]
-    intervals = []
+    intervals = list([])
+    multis = []
     for interval in range(0, intervalCount):
-        intervals.append([int(s) for s in input().split(" ")])
+        inInterval = ([int(s) for s in input().split(" ")])
+        if inInterval in intervals:
+            multis[intervals.index(inInterval)-1] += 1
+        else:
+            intervals.append(inInterval)
+            multis.append(1)
+    result = 0
     for c in range(maxCuts):
         if cutsPossible(intervals):
             point = findBestX(intervals)
             intervals = performCut(intervals, point)
+            intervals, num = prune(intervals)
+            result += num
         else:
             break
-    result = len(intervals)
+    result += len(intervals)
     print("Case #{}: {}".format(case, result))
