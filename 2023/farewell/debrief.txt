@@ -1,0 +1,7 @@
+I started this competition about a half hour after it opened. I competed exclusively on round A. Unfortunately I wasn't able to complete question 2.
+
+At first I implemented an overcomplicated method, which produced correct answers, at the cost of running in ~O(n^2). After trying to optimize it I realized there was a massively easier method (designate a light as covering its entire range, skip to the end of its range, and continue, counting only lights that were not completely redundant).
+
+In writing this document I realized this may have produced wrong answers but may have been remedied by simply sorting the list descending, and made this change as Practice Attempt 2, scoring 4/14 points (failing with TLE on Set 2).
+
+Regardless, I was unfortunately not able to score any points on this question in official competition, and scoring the extra 4 points would have only marginally improved my rank from 3080 to ~3000th.
